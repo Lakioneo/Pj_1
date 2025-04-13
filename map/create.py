@@ -4,9 +4,13 @@ import window
 import random
 
 
-
-
-def create_level(path_level:str, width, height, speed):
+def create_level(path_level:str, width, height, speed) -> dict["Decor": sprite.Group,"Collision": sprite.Group]:
+    """
+    {
+        "Decor": Group,
+        "Collision": Group
+    }
+    """
     mapDecor = sprite.Group()
     mapCollision = sprite.Group()
 
@@ -17,14 +21,14 @@ def create_level(path_level:str, width, height, speed):
             x = 0
             for symbol in line:
                 if symbol == ".":
-                    block = Block(window.grace[random.randint(len(window.grace)-1)],
+                    random_number_image = random.randint(0,len(window.grace)-1)
+                    block = Block(window.grace[random_number_image],
                                     x,
                                     y,
                                     width,
                                     height, 
                                     speed)
                     mapDecor.add(block)
-
                 if symbol == "#":
                     block = Block(window.paving,
                                     x,
@@ -32,10 +36,8 @@ def create_level(path_level:str, width, height, speed):
                                     width,
                                     height, 
                                     speed)
-                    mapCollision.add()
-
+                    mapCollision.add(block)
                 x += width
-
             y += height 
 
         return {
